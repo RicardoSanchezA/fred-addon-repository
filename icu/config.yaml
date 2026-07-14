@@ -1,5 +1,5 @@
 name: ICU Engine
-version: 0.3.0
+version: 0.4.0
 slug: icu_engine
 description: Native presence inference and lighting core for ICU
 url: https://github.com/RicardoSanchezA/icu-addon-repository
@@ -16,5 +16,7 @@ homeassistant_api: true
 discovery:
   - icu.engine
 backup: hot
-options: {}
-schema: {}
+options:
+  observer_mode: false
+schema:
+  observer_mode: bool
