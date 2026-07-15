@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.1
+
+- Areas can now have multiple light entities, dispatched as one batched
+  service call instead of always targeting a single (formerly
+  group-wrapped) light. Switch brightness gating uses the brightest of an
+  area's lights.
+- Add conflict detection: a `state_changed` event on a managed light or
+  switch caused by something other than ICU itself (a foreign automation,
+  the frontend, a physical switch) is now tracked and surfaced to the
+  Python integration.
+- Fix `/health`'s `supported_commands` list, which never advertised
+  `set_switch_threshold` even though it has been dispatchable since 0.5.0.
+
 ## 0.5.0
 
 - Add smart-plug/switch entity support: switches follow an area's lighting
