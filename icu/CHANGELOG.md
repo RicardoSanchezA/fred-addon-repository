@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.6
+
+- Report the add-on package version on the ICU Engine health endpoint
+  (resolved from Supervisor's `/addons/self/info`) so the Home Assistant
+  integration can surface it as a diagnostic.
+
 ## 0.5.5
 
 - Expose repeated entity-conflict and Home Assistant transport-failure
