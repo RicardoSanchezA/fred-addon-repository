@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.4
+
+- Rebuild the engine image from the current refactored runtime code after the Stage 3b and Stage 4 module-split backlog landed.
+
 ## 0.5.3
 
 - Publish presence and activity records so the ICU dashboard can show the latest
