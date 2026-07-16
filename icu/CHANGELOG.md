@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.5
+
+- Expose repeated entity-conflict and Home Assistant transport-failure
+  diagnostic counters through the ICU Engine health endpoint.
+
 ## 0.5.4
 
 - Rebuild the engine image from the current refactored runtime code after the Stage 3b and Stage 4 module-split backlog landed.
