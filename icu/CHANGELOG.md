@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.8.0
+
+- The engine now owns per-area lighting profile values. New
+  `set_profile_value` and `clear_zone_profile` commands persist per-area
+  brightness/color temperature and pin/release per-area profile overrides;
+  values are published in `state.profile_values` and applied directly via
+  `light.turn_on` (no more `script.apply_light_profile` dependency).
+- Zone profile overrides are now explicit pins: setting a zone to the
+  current home profile keeps it custom until cleared.
+- New dynamic-remote gestures: double press cycles the home profile (or the
+  zone's own profile when pinned); press-and-hold toggles following
+  home/custom, acknowledged by a best-effort double flash.
+- Activity records for profile changes carry a structured `outcome` field:
+  `home_profile_changed`, `area_profile_changed`, `area_set_custom`, or
+  `area_following_home`.
+- Version aligned with the Python integration (0.8.0).
+
 ## 0.5.6
 
 - Report the add-on package version on the ICU Engine health endpoint
