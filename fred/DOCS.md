@@ -25,5 +25,5 @@ to actually control lights.
 
 Sets the maximum number of occupants FrED should model for the durable
 multi-Glower track scaffold. The default is `2`; accepted values are `1`
-through `16`. FrED refuses to start if the environment value is missing this
+through `16`. FrED refuses to start if the environment value fails this
 range check, so bare-container runs and add-on runs use the same limit.
