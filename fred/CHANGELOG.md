@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.1
+
+- Keep the add-on release aligned with the FrED integration's read-only
+  aggregate occupancy dashboard polish.
+
 ## 0.10.0
 
 - Rebuild the engine image for protocol v3, which reports anonymous occupant
