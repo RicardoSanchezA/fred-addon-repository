@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.4
+
+- Rebuild the engine image for the coordinated FrED configuration UI polish release.
+
 ## 0.10.3
 
 - Rebuild the engine image for interior door-close split detection.
