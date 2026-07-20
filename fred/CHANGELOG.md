@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.2
+
+- Rebuild the engine image for configuration schema 4 and open-connection
+  lighting retention support.
+
 ## 0.10.1
 
 - Keep the add-on release aligned with the FrED integration's read-only
