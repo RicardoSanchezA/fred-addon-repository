@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.3
+
+- Rebuild the engine image for interior door-close split detection.
+
 ## 0.10.2
 
 - Rebuild the engine image for configuration schema 4 and open-connection
