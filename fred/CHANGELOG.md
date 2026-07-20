@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.5
+
+- Rebuild the engine image for the People-home estimate override control.
+
 ## 0.10.4
 
 - Rebuild the engine image for the coordinated FrED configuration UI polish release.
