@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.8
+
+- Fix Home Console map rendering by moving the SVG stylesheet out of
+  `<defs>`.
+- Reflow the Home Console desktop dashboard into a map plus three side
+  columns: Presence, Lighting, and Controls/Activity.
+
 ## 0.10.7
 
 - Fix the Home Console under Home Assistant ingress by keeping the layout asset
