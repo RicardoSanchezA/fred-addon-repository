@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.6
+
+- Expose the FrED Home Console through Home Assistant ingress and a
+  **FrED Home** sidebar panel (`/ui/`, streaming enabled for SSE).
+- Requires an engine image that trusts Supervisor `X-Ingress-Path` for
+  browser-facing `/ui/v1/*` routes (no bearer token in the browser).
+
 ## 0.10.5
 
 - Rebuild the engine image for the People-home estimate override control.

@@ -1,5 +1,5 @@
 name: FrED Engine
-version: 0.10.5
+version: 0.10.6
 slug: fred
 description: "FrED: presence inference and lighting core (LPS + Glow)"
 url: https://github.com/RicardoSanchezA/fred-addon-repository
@@ -13,6 +13,12 @@ init: false
 stage: experimental
 homeassistant: 2026.7.0
 homeassistant_api: true
+ingress: true
+ingress_port: 8099
+ingress_entry: /ui/
+ingress_stream: true
+panel_icon: mdi:floor-plan
+panel_title: FrED Home
 discovery:
   - fred
 backup: hot

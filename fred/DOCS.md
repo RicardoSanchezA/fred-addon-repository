@@ -9,6 +9,17 @@ The add-on stores its instance identity, API credential, accepted
 configuration, and durable command state under `/data`, which Home Assistant
 includes in add-on backups.
 
+## Home Console
+
+The add-on serves the FrED Home Console at `/ui/` and exposes it through
+Home Assistant ingress. After the add-on starts, open **FrED Home** in the
+sidebar. The browser never receives the backend bearer token: HA session
+authentication is the trust boundary, and the engine accepts ingress-proxied
+UI requests that carry Supervisor's `X-Ingress-Path` header.
+
+The Lovelace **FrED Engine** dashboard remains available as the detailed
+control/debug fallback.
+
 ## Options
 
 ### `observer_mode`
