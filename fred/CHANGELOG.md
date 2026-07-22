@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.2
+
+- Coordinated release: engine fix for areas that lose sensor observability
+  (an area whose motion entities go unavailable is now marked stale rather
+  than staying active indefinitely), and an integration guard rejecting
+  non-binary long-lived evidence entities.
+- No add-on behaviour change; the version moves so the cross-repo contract
+  stays consistent.
+
 ## 0.11.1
 
 - Add a Supervisor **watchdog** so a hung engine is detected and restarted.
