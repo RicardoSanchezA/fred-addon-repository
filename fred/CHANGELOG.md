@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.1
+
+- Add a Supervisor **watchdog** so a hung engine is detected and restarted.
+- New unauthenticated `GET /live` liveness endpoint (returns only
+  `{"status":"ok"}`; exposes no state). Reached over the internal container
+  network — no host port is published and the ingress trust boundary is
+  unchanged.
+
 ## 0.11.0
 
 - Configuration schema **5**: remove unused `door_evidence_seconds` option (never
