@@ -34,6 +34,21 @@ Do not publish host port 8099 (no `ports:` mapping) without a reverse-proxy
 auth layer: forging `X-Ingress-Path` from outside Supervisor ingress bypasses
 the bearer for `/ui/v1/*` commands.
 
+### Liveness and the watchdog
+
+Supervisor's watchdog polls `GET /live`, which is **unauthenticated by design**:
+Supervisor has no way to present the engine's bearer token, and `/api/v1/health`
+is bearer-gated. `/live` returns only `{"status":"ok"}` — no status, version,
+instance id, or configuration — and reads no engine state.
+
+It is reached over the internal container network, so **no host port is
+published** and the boundary described above stays intact.
+
+The probe is liveness, not readiness: it proves the process is scheduled and
+accepting connections. It answers `200` while the engine is waiting for its
+first configuration (a healthy state, not a hang), and it deliberately takes no
+runtime lock, so a stalled internal lock would still answer `200`.
+
 Supervisor options stay intentionally thin (`observer_mode`, `max_occupants`):
 only settings that must be known before the integration pushes configuration
 belong here. Structural topology and lighting targets are configured in the

@@ -1,5 +1,5 @@
 name: FrED Engine
-version: 0.11.0
+version: 0.11.1
 slug: fred
 description: "FrED: presence inference and lighting core (LPS + Glow)"
 url: https://github.com/RicardoSanchezA/fred-addon-repository
@@ -15,6 +15,13 @@ homeassistant: 2026.7.0
 homeassistant_api: true
 ingress: true
 ingress_port: 8099
+# Supervisor reaches the container directly on the internal network, so the
+# literal engine port is correct here. Do NOT change this to [PORT:8099]:
+# that placeholder resolves against a published host port, which this add-on
+# deliberately does not have -- adding a `ports:` mapping to make it resolve
+# would expose 8099 on the LAN and dismantle the ingress trust boundary
+# documented in DOCS.md.
+watchdog: http://[HOST]:8099/live
 ingress_entry: ui/
 ingress_stream: true
 panel_icon: mdi:floor-plan
