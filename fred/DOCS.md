@@ -29,8 +29,15 @@ UI requests that carry Supervisor's `X-Ingress-Path` header.
 
 This matches the usual Home Assistant add-on tradeoff: the container network
 is assumed not to be reachable by arbitrary LAN clients who could forge
-`X-Ingress-Path`. Do not publish the add-on port directly on the LAN without
-an additional network boundary.
+`X-Ingress-Path`. **That network boundary is load-bearing, not incidental.**
+Do not publish host port 8099 (no `ports:` mapping) without a reverse-proxy
+auth layer: forging `X-Ingress-Path` from outside Supervisor ingress bypasses
+the bearer for `/ui/v1/*` commands.
+
+Supervisor options stay intentionally thin (`observer_mode`, `max_occupants`):
+only settings that must be known before the integration pushes configuration
+belong here. Structural topology and lighting targets are configured in the
+FrED integration, not in the add-on options form.
 
 The Lovelace **FrED Engine** dashboard remains available as the detailed
 control/debug fallback.
