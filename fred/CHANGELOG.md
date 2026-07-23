@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.11.5
+
+- Preserve automation through contradicted closed-door placements by relocating
+  bodies onto credible live motion instead of disabling.
+- Infer clears per track, and back-date clear-derived evidence to when the PIR
+  last saw motion so clears no longer outrank fresher detects.
+
 ## 0.11.4
 
 - Fix the Home Console highlighting the wrong guest room: the `cuarto_visitas`
