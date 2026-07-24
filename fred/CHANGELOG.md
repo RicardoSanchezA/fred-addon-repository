@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.9
+
+- Harden protocol-bump migration: the integration re-reads and adopts live
+  Supervisor discovery when the stored config-entry record predates a bump, now
+  covered by setup-path regression tests. No protocol or schema change.
+- First release deployed via the image-pull path (private GHCR image + host
+  registry auth) instead of a local source build.
+
 ## 0.11.8
 
 - Fix FrED integration setup failing after the v4 protocol bump. A config entry
