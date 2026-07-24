@@ -1,6 +1,12 @@
 # Changelog
 
+## 0.11.10
+
+- Fix reset seeding occupants defaulting to `away` and degrading on first interior motion (`lps-core`). Reset/enable empty tracks now default to `unknown` and preserve `away` only when already set; `handle_departure_timeout` is the single path entering `away`.
+- Glow section & map UI now derive light "on" state directly from `lit_areas` (`fred-protocol` / `fred-server`), eliminating stale yellow light indicators caused by HA light entity echo lag.
+
 ## 0.11.9
+
 
 - Harden protocol-bump migration: the integration re-reads and adopts live
   Supervisor discovery when the stored config-entry record predates a bump, now
