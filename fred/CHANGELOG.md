@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.8
+
+- Fix FrED integration setup failing after the v4 protocol bump. A config entry
+  keeps the discovery record's protocol version from when it was created, and
+  Supervisor never re-notifies on a changed record, so setup rejected the stale
+  v3 discovery and never started. The integration now re-reads the live
+  Supervisor discovery and adopts it when the stored one predates a protocol
+  bump. Engine and add-on are version-only bumps.
+
 ## 0.11.7
 
 - Replace the enabled/disabled model with explicit engine modes: `off`
