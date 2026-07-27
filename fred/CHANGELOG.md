@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.11
+
+- Clear-wave repair now requires a corroborated trail before relocating a floor-retained occupant (`lps-core`). Bare topological reachability could teleport a retained body across the house onto any uniquely-plausible area, emptying the area it left so its next real motion read as an extra occupant and degraded the engine at `max_occupants`. The route is now searched for one whose intermediate areas actually went quiet, in travel order.
+- Interior door watches whose sustained PIR trail has been superseded are consumed instead of resolved (`fred-server`). Both sides staying lit through their clear delay after the occupant had already moved on produced split evidence with no active track on either side, which disabled the engine. The guard sits on the shared resolution path, covering both the timer and state-change routes.
+- Accept summaries in decision logs now carry their reason, so a timer-sourced relocation is distinguishable from an ordinary walk.
+
 ## 0.11.10
 
 - Fix reset seeding occupants defaulting to `away` and degrading on first interior motion (`lps-core`). Reset/enable empty tracks now default to `unknown` and preserve `away` only when already set; `handle_departure_timeout` is the single path entering `away`.
