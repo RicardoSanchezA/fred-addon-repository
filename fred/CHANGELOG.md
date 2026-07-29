@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0
+
+- **Configuration schema 6.** Expect a one-time `configuration.json` quarantine and a `waiting_for_config` window while the integration reapplies config; the engine mode resets to its default across that quarantine, so re-set it if it was anything but `smart_home`.
+- `device_tracker` entities may now be area keep-alive evidence (`long_lived_entities`). Classification is domain-aware -- `home` is active and every other state, including `not_home` and named zones, is softened by a new `device_tracker_grace_seconds` (default 300s) rather than the appliance hold. Grace no longer re-arms on repeated readings in any domain, which also fixes a television stuck `unavailable` holding its area lit forever.
+- New `person_home_entities` (restricted to `person.*`) and `person_home_grace_seconds` decide how many people are home. That count keeps a departure that retires the last placement in `unknown` rather than `away`, so the next interior motion locates whoever stayed instead of degrading the engine; it lets tracker absence conclude an empty house behind a completed-departure guard and a no-recent-motion guard; and it biases spawn-vs-relocate alongside, never replacing, the manual People-home claim. It is never written into the occupant floor.
+- Concluding the house is empty now withdraws every area's keep-alive support, whatever the domain and whether the reading is live or held by grace.
+- New diagnostics: a tracker-derived people count with its located/unlocated split, and a tracker-conflict sensor covering a sustained body excess, a tracker holding the house open for the full unlocated window, and an absence a guard refused.
+
 ## 0.11.11
 
 - Clear-wave repair now requires a corroborated trail before relocating a floor-retained occupant (`lps-core`). Bare topological reachability could teleport a retained body across the house onto any uniquely-plausible area, emptying the area it left so its next real motion read as an extra occupant and degraded the engine at `max_occupants`. The route is now searched for one whose intermediate areas actually went quiet, in travel order.
