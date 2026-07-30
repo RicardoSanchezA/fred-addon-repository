@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.1
+
+- A closing interior door is no longer read as *only* a split (`fred-server`). When a door shuts and the far side lights up a fraction of a second later, that is somebody pulling it closed behind them, not two people straddling it — but the near side is still lit for its clear delay, so at `max_occupants` every repair path declined in turn and the engine degraded. The verdict is now deferred instead of guessed: it resolves when either side goes quiet (transit, no split), when both sides carry a post-close detect (a real split), or at a 90s fail-safe. Live 2026-07-29 13:04 regression, Sala↔Pasillo-Cuartos.
+- An area whose motion sensor goes `unavailable` now counts as going quiet for that decision. Such an area reads `Unknown` rather than `Clear`, which previously reached nothing at all — so the very walk this fix targets, where a Pasillo-Cuartos sensor was unavailable throughout, would have been delayed 90s rather than spared.
+- Door closes reported twice within two seconds (one physical close, with a bounce open between) are now a single watch anchored to the first close, so a bounce cannot restart the deferral clock or discard the motion evidence recorded before it.
+
+No configuration change: protocol 4 and schema 6 are unchanged, so there is no re-apply, quarantine, or engine-mode reset on upgrade.
+
 ## 0.12.0
 
 - **Configuration schema 6.** Expect a one-time `configuration.json` quarantine and a `waiting_for_config` window while the integration reapplies config; the engine mode resets to its default across that quarantine, so re-set it if it was anything but `smart_home`.
