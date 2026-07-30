@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.2
+
+- A door split that finds the evidence already consistent now says so instead of stopping (`lps-core`). `soft_reset_placements` returned one "no" for three different answers — the evidence is impossible, repair failed, and there was nothing to repair — and both callers turned all three into a degrade. On 2026-07-30 every lit area lay on one ordered walk ending where a body was already seated, so nothing needed placing, and FrED stopped anyway.
+- Lit rooms are now counted as walks rather than as rooms. One occupant in transit lights every room they pass through and holds them all for a clear delay, which previously read as a crowd and tripped the "more rooms than people" guard. The count is an exact minimum path cover, which matters: a greedy approximation over-counts on this house's topology and that over-count is a false stop, not a safe one.
+- Clear-wave repair can now route through a lit room when somebody else's body explains why it is lit — a second occupant standing in it, or in an open-plan neighbour whose motion its sensor can see. A room occupied by someone else never clears, so any route through it could never corroborate, which is what left Sala permanently blocking the route out of Cuarto. One such room per route, and never a route corroborated only by them.
+
+No configuration change: protocol 4 and schema 6 are unchanged, so there is no re-apply, quarantine, or engine-mode reset on upgrade.
+
 ## 0.12.1
 
 - A closing interior door is no longer read as *only* a split (`fred-server`). When a door shuts and the far side lights up a fraction of a second later, that is somebody pulling it closed behind them, not two people straddling it — but the near side is still lit for its clear delay, so at `max_occupants` every repair path declined in turn and the engine degraded. The verdict is now deferred instead of guessed: it resolves when either side goes quiet (transit, no split), when both sides carry a post-close detect (a real split), or at a 90s fail-safe. Live 2026-07-29 13:04 regression, Sala↔Pasillo-Cuartos.
