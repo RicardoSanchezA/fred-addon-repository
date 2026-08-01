@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.12.3
+
+- A clear can no longer be read as a departure across a shut interior door (`lps-core`). Deciding where a cleared area's occupant went searched the house as if every door were open, so a Sala clear could move a track through a door that had just been shut. On 2026-07-30 that happened twice: the first left Sala empty, so the next motion there read as an extra body and degraded the engine at 21:10:57; the second put a body in Despensa while its occupant was in the shower. Both the motion-path and clear-wave routes now refuse to cross a shut door.
+- The engine is now told which interior doors are shut (`fred-server`), on every door transition and at boot. `unknown` and `unavailable` count as not-shut, matching how the rest of the runtime reads a door, so a flaky sensor fails open rather than stranding an occupant.
+- Both 2026-07-30 incidents are now replayed from real recorder data in CI, through the real runtime, rather than reconstructed by hand.
+
+Over a 250 h replay of recorded history, relocations that crossed a shut door fall from 128 to zero and total degrades fall from 558 to 549.
+
+Known residual: three door-split degrades that 0.12.2 did not produce. They are a sustained-both-sides shape the transit classifier never defers, which the bogus relocation this release removes had been masking. Net degrades still fall.
+
+No configuration change: protocol 4 and schema 6 are unchanged, so there is no re-apply, quarantine, or engine-mode reset on upgrade.
+
 ## 0.12.2
 
 - A door split that finds the evidence already consistent now says so instead of stopping (`lps-core`). `soft_reset_placements` returned one "no" for three different answers — the evidence is impossible, repair failed, and there was nothing to repair — and both callers turned all three into a degrade. On 2026-07-30 every lit area lay on one ordered walk ending where a body was already seated, so nothing needed placing, and FrED stopped anyway.
