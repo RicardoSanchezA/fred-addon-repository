@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.0
+
+- Add optional authoritative presence assertions from configured point-in-time
+  sources, including the macOS Mobile App Frontmost App sensor.
+- Configuration schema 7 is written by the integration. The engine accepts
+  persisted and applied schema 6 or 7 during this rolling release, while health
+  advertises both versions.
+- Upgrade the FrED engine/add-on before the integration. An integration that
+  sends schema 7 to an older schema-6-only engine keeps its last good runtime
+  configuration and reports an upgrade-required configuration push failure.
+
 ## 0.12.4
 
 - A motion clear no longer relocates an occupant simply because another active
