@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.12.4
+
+- A motion clear no longer relocates an occupant simply because another active
+  room is topologically reachable. Clear-driven relocation now needs a
+  corroborated, strictly time-ordered trail away from the cleared area, and it
+  retains the occupant when the cleared area still has active evidence. This
+  prevents a person sitting still in Cuarto from being pulled into an older,
+  unrelated Cocina detection just because Cuarto's PIR cleared.
+- The door-aware route restriction from 0.12.3 now composes with this evidence
+  gate, so a clear inference must both respect closed doors and be supported by
+  an observed walk.
+
+Over a 250.9 h replay of recorded history, clear-driven relocations fall from
+3,102 to 482 and non-door degrades fall from 534 to 354; door-related degrades
+remain 15. Protocol 4 and configuration schema 6 are unchanged, so there is no
+configuration re-apply, quarantine, or engine-mode reset on upgrade.
+
 ## 0.12.3
 
 - A clear can no longer be read as a departure across a shut interior door (`lps-core`). Deciding where a cleared area's occupant went searched the house as if every door were open, so a Sala clear could move a track through a door that had just been shut. On 2026-07-30 that happened twice: the first left Sala empty, so the next motion there read as an extra body and degraded the engine at 21:10:57; the second put a body in Despensa while its occupant was in the shower. Both the motion-path and clear-wave routes now refuse to cross a shut door.
