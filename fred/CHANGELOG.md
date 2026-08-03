@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.1
+
+- Defer an ambiguous interior-door close when the observed open interval already
+  explains the two sustained motion readings as one out-and-back passage. The
+  watch consumes when either side clears, still routes fresh motion on both
+  sides to normal split handling, and retains its 90-second fail-safe.
+- Preserve an active deferred watch through short door-contact open/close
+  chatter, require the full hold deadline on both timer and event paths, and
+  keep clear-wave relocation from traversing a shut interior door.
+- Add recorder-derived regression fixtures for the 2026-08-02 and 2026-08-03
+  Sala/Pasillo incidents. No protocol, configuration-schema, or integration
+  change: this is an engine/add-on-only deployment.
+
 ## 0.13.0
 
 - Add optional authoritative presence assertions from configured point-in-time
