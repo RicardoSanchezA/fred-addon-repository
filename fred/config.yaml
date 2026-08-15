@@ -1,5 +1,5 @@
 name: FrED Engine
-version: 0.13.1
+version: 0.14.0
 slug: fred
 
 description: "FrED: presence inference and lighting core (LPS + Glow)"

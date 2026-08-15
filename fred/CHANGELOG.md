@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.14.0
+
+- Replace the clear-wave repair model with an uncertain-state engine. A track
+  whose evidence cannot be narrowed now carries a set of candidate areas and
+  keeps every one of them lit, instead of the engine dropping to simple
+  lighting when it could not decide.
+- Reconcile the detect and clear chains by **interval compatibility** rather
+  than by order. A latched PIR emits one Detect and then extends silently, so a
+  room an occupant walks back into clears last while its rising edge stays put;
+  comparing orders reported those ordinary walks as contradictions.
+- Add the D6 source-motion gate: nobody is moved out of a room whose trusted
+  PIR reported nothing during the walk. Candidate authors are chosen by
+  evidence that a body actually walked the route, not by topological
+  reachability, and the route now respects shut doors.
+- Place an occupant on a clear when motion supports exactly one destination,
+  and widen instead of guessing when several are equally supported or a room is
+  already occupied.
+- Replace auto-degrade with a resync/quarantine ladder: a contradiction rebuilds
+  presence from live Home Assistant state, repeated contradictions in one room
+  distrust that room's sensor, and `dumb_home` is reached only when the house
+  can no longer be modelled. A completed departure now resets the ladder.
+- Correct the PIR clear-delay default from 15s to a measured 22s, and bound the
+  occupant-count floor so a missed departure cannot hold a room lit
+  indefinitely.
+
 ## 0.13.1
 
 - Defer an ambiguous interior-door close when the observed open interval already
