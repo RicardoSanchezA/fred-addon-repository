@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.0
+
+- Add daylight awareness: a solar clock, lux ingest, and occupancy
+  eligibility so automatic lighting can stay off during the day and ramp
+  toward Bright or the selected profile at dawn and dusk.
+- Protocol 5 / configuration schema 8. The engine still loads persisted
+  schemas 6 and 7; new integration payloads write schema 8. Upgrade the
+  engine/add-on first, then restart Core so the integration can re-adopt
+  protocol 5 discovery and reapply configuration.
+- Off and disconnected clock paths advance solar deadlines without
+  dispatching lights. Remotes record Glow manual-on / manual-dark and
+  project lighting only when the engine is allowed to dispatch.
+
 ## 0.15.0
 
 - Preserve a person's observed walk across motion events, so a continuing
