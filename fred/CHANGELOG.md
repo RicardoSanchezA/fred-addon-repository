@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.15.0
+
+- Preserve a person's observed walk across motion events, so a continuing
+  walker or a valid return wins over a sitter in the destination room. Clear
+  inference now rejects unsupported quiet-rival moves, stale or unavailable
+  destinations, and routes that cross a shut interior door.
+- Classify circulation halls from the per-area configuration rather than
+  hard-coded room IDs. The integration migrates the existing `pasillo` and
+  `pasillo__2` halls, so the degree-three second hallway uses the intended
+  destination rule instead of falling back to neighbour-edge inference.
+
 ## 0.14.0
 
 - Replace the clear-wave repair model with an uncertain-state engine. A track
