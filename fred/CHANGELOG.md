@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.16.2
+
+- Light a room from its motion sensor immediately, before presence
+  inference and before `runtime.json` is written to disk. A hallway PIR no
+  longer waits on track assignment or on a slow disk to turn its light on.
+- Restore the post-inference trusted-motion sweep. A second PIR that lifted
+  a sensor's quarantine while the area was already Active left the room dark
+  until an unrelated timer fired.
+- Never treat the entrance door as motion, even when it is also listed among
+  an area's motion entities.
+- Reconcile dead-end excursions whose room clears before the connector, so
+  walking out of a room whose door was shut behind you no longer strands the
+  body on the connector or spawns a ghost track.
+- Survive a failing disk: runtime persistence honours its retry backoff
+  instead of attempting one fsync per motion event, flushes on shutdown and
+  on WebSocket disconnect, and withholds the sequence from the UI and from
+  Home Assistant until the write actually lands.
+- Capture the daylight snapshot after the engine runs, so the UI can no
+  longer receive a newer sequence carrying stale solar fields.
+- Engine image moves to `ghcr.io/richitacos/freds-crib` following the
+  repository transfer to the `richitacos` organisation. Supervisor pulls the
+  new name on this update; the existing `ghcr.io` registry credential covers
+  it.
+
+No protocol or configuration schema change: this release stays on protocol 5
+and schema 8, so no `configuration.json` quarantine is expected and the FrED
+integration does not need to be updated alongside it.
+
 ## 0.16.0
 
 - Add daylight awareness: a solar clock, lux ingest, and occupancy
