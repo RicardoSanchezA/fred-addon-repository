@@ -1,5 +1,5 @@
 name: FrED Engine
-version: 0.16.0
+version: 0.16.2
 slug: fred
 
 description: "FrED: presence inference and lighting core (LPS + Glow)"
@@ -7,7 +7,7 @@ url: https://github.com/RicardoSanchezA/fred-addon-repository
 arch:
   - amd64
   - aarch64
-image: ghcr.io/ricardosancheza/freds-crib
+image: ghcr.io/richitacos/freds-crib
 startup: application
 boot: auto
 init: false
