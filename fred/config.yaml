@@ -31,6 +31,16 @@ panel_admin: false
 discovery:
   - fred
 backup: hot
+# Rolling diagnostics stay out of backups (richitacos/freds-crib#162).
+# Supervisor tests each path under /data with PurePath.match: patterns anchor
+# on the right and `**` matches one segment, like `*`. So each directory is
+# backed up empty and everything directly inside it is skipped, including
+# subdirectories such as a triage bundle's. Keep these names unique under
+# /data, because `logs/**` would also skip any other directory named `logs`.
+backup_exclude:
+  - "logs/**"
+  - "state-history/**"
+  - "feedback-bundles/**"
 options:
   observer_mode: false
   max_occupants: 2

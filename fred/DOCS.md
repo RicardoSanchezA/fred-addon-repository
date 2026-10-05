@@ -9,7 +9,11 @@ The add-on stores its instance identity, API credential, accepted
 configuration, and durable command state under `/data`, which Home Assistant
 includes in add-on backups. Since 0.17.0 it also keeps a rolling log in
 `/data/logs/` and a history of published states in `/data/state-history/`,
-each capped at 64 MiB, so backups can grow by up to 128 MiB.
+each capped at 64 MiB. Backups leave out the contents of both directories,
+and of `/data/feedback-bundles/`, which is reserved for triage bundles. Copy
+these files off the box yourself if you need them. A restore brings these
+directories back empty, so the log and state history start again from the
+restore.
 
 ## Home Console
 
