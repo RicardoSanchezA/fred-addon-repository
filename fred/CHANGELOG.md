@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.17.0
+
+- One unresponsive device no longer deafens the engine. A light that never
+  answered a service call used to stall the whole Home Assistant connection,
+  so motion stopped being processed everywhere. Commands now time out after
+  10 seconds, events keep flowing while a call is outstanding, and each area
+  dispatches its lighting independently, so a dead light delays only its own
+  room.
+- Reconnect when the event stream goes quiet. After two minutes without an
+  event the engine fires a probe event through Home Assistant; if it does not
+  come back, or no event has arrived for 30 minutes, the engine reconnects
+  and re-subscribes.
+- Close the Home Assistant connection cleanly on shutdown instead of letting
+  it time out.
+- Keep a rolling JSON-lines log (`/data/logs/`) and a history of every
+  published state (`/data/state-history/`). Each is capped at 64 MiB, with
+  the oldest segments evicted first. Both are written off the event path, so
+  a slow disk drops lines (recorded as gaps) rather than delaying lighting.
+- Home Console: compare production presence (blue) with the LPS Next shadow
+  explanation (yellow), and record occupant corrections by dragging or
+  removing a dot. Corrections are feedback only; neither inference nor
+  lighting uses them. The shadow side appears only when the opt-in sidecar is
+  running.
+
+No protocol or configuration schema change: this release stays on protocol 5
+and schema 8, so no `configuration.json` quarantine is expected and the FrED
+integration does not need to be updated alongside it.
+
 ## 0.16.2
 
 - Light a room from its motion sensor immediately, before presence
