@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.18.0
+
+- Every LPS Next feedback report now archives a triage bundle under
+  `/data/feedback-bundles/`, so analysis no longer depends on the HA
+  recorder (10-day purge) or Supervisor's log buffer. A bundle holds the
+  report and its context, the engine's environment and configuration,
+  its state history and rolling log, HA history and logbook for every
+  entity the engine reads, and the Supervisor logs for the engine and
+  Core, over the incident window padded 15 minutes before and 5 after.
+  Anything that could not be collected is named as a gap. Bundles are
+  capped at 64 MiB each and 1 GiB in all; a full store rejects new
+  bundles visibly and never deletes old ones. Bundles are exported over
+  the engine's bearer API and left out of HA backups.
+- **New permissions.** To read Home Assistant Core's log, the add-on now
+  has Supervisor API access (`hassio_api`) with the `homeassistant` role.
+  That role also allows restarting, stopping, updating and reconfiguring
+  Core; the engine does none of that. See DOCS.md before installing.
+- Feedback v2 in the Home Console: report what you saw as room counts
+  (at least or exactly), empty rooms, someone home, lighting outcomes and
+  notes, with "Looks right" scoped to rooms or the whole house. The engine
+  also stores check-ins and their answers; the panel does not schedule them
+  yet. Reports remain feedback only; neither inference nor lighting uses
+  them.
+- A light that keeps timing out no longer costs its room 10 seconds per
+  decision. After two timeouts the engine backs off and probes it again
+  after 30 seconds, doubling up to 10 minutes, and only the newest pending
+  state is sent when it answers.
+- HA backups leave out the rolling log, state history and triage bundles.
+
+No protocol or configuration schema change: this release stays on protocol 5
+and schema 8, so the FrED integration does not need to be updated alongside
+it.
+
 ## 0.17.0
 
 - One unresponsive device no longer deafens the engine. A light that never
