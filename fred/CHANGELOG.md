@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.21.0
+
+- The Home Console accepts Supervisor's ingress header only from
+  Supervisor's own ingress proxy. A request that sets `X-Ingress-Path` from
+  anywhere else, such as through the LPS Next sidecar's SSH tunnel, needs the
+  backend bearer. The sidebar panel works as before.
+- New `GET /api/v1/configuration` (bearer only) returns the active
+  configuration, so the LPS Next sidecar can resync itself after a
+  configuration change.
+- LPS Next predictions that FrED refuses now say why, so the sidecar can
+  resync on a configuration change and stop on anything else.
+
+No protocol or configuration schema change: this release stays on protocol 5
+and schema 8, so the FrED integration does not need to be updated alongside
+it.
+
 ## 0.20.0
 
 - The Home Console recovers by itself after the Home Assistant app returns

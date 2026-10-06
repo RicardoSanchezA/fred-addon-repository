@@ -47,24 +47,28 @@ The add-on serves the FrED Home Console at `/ui/` and exposes it through
 Home Assistant ingress. After the add-on starts, open **FrED Home** in the
 sidebar. The browser never receives the backend bearer token: HA session
 authentication is the trust boundary, and the engine accepts ingress-proxied
-UI requests that carry Supervisor's `X-Ingress-Path` header.
+UI requests that carry Supervisor's `X-Ingress-Path` header **and** arrive
+from Supervisor's own address.
 
 ### Auth model
 
 - **Sidebar / ingress:** Supervisor authenticates the HA user, proxies the
-  browser to the add-on, and injects `X-Ingress-Path`. The engine treats a
-  non-empty `X-Ingress-Path` as sufficient for `/ui/v1/*` only.
+  browser to the add-on, and injects `X-Ingress-Path`. The engine honours a
+  non-empty `X-Ingress-Path` for `/ui/v1/*` only, and only when the TCP peer
+  is Supervisor's ingress proxy (`172.30.32.2`). From any other peer the
+  header is dropped and logged, and only the bearer authorizes.
+  `X-Forwarded-For` and similar headers are never consulted.
 - **Integration API (`/api/v1/*`):** always requires the backend bearer token.
   Ingress headers never authorize configuration or integration commands.
 - **Standalone dogfood:** open the engine `/ui/` directly and paste the bearer
   token when prompted (stored in `sessionStorage` for the tab only).
 
-This matches the usual Home Assistant add-on tradeoff: the container network
-is assumed not to be reachable by arbitrary LAN clients who could forge
-`X-Ingress-Path`. **That network boundary is load-bearing, not incidental.**
-Do not publish host port 8099 (no `ports:` mapping) without a reverse-proxy
-auth layer: forging `X-Ingress-Path` from outside Supervisor ingress bypasses
-the bearer for `/ui/v1/*` commands.
+Since 0.21.0 a forged `X-Ingress-Path` no longer authorizes anything unless
+it really comes from Supervisor's address. That matters because the LPS Next
+sidecar reaches port 8099 through an SSH tunnel, so other processes can
+reach it too. Still keep host port 8099 unpublished (no `ports:` mapping):
+anything else on the `hassio` network shares the route, and the bearer is
+the only protection the API has.
 
 ### Liveness and the watchdog
 
