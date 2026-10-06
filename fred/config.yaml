@@ -46,7 +46,9 @@ panel_admin: false
 discovery:
   - fred
 backup: hot
-# Rolling diagnostics stay out of backups (richitacos/freds-crib#162).
+# Rolling diagnostics stay out of backups (richitacos/freds-crib#162), and so
+# does the rolling LPS comparison history (richitacos/freds-crib#154): pairs a
+# report cites are copied into `comparison/`, which stays in backups.
 # Supervisor tests each path under /data with PurePath.match: patterns anchor
 # on the right and `**` matches one segment, like `*`. So each directory is
 # backed up empty and everything directly inside it is skipped, including
@@ -56,6 +58,7 @@ backup_exclude:
   - "logs/**"
   - "state-history/**"
   - "feedback-bundles/**"
+  - "comparison-history/**"
 options:
   observer_mode: false
   max_occupants: 2
