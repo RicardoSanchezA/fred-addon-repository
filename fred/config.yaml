@@ -4,8 +4,10 @@ slug: fred
 
 description: "FrED: presence inference and lighting core (LPS + Glow)"
 url: https://github.com/RicardoSanchezA/fred-addon-repository
+# aarch64 only: from 0.19.0 the engine image is published for it alone
+# (richitacos/freds-crib publish.yml). Listing amd64 would let Supervisor
+# install the add-on on an x86 box that cannot pull those releases.
 arch:
-  - amd64
   - aarch64
 image: ghcr.io/richitacos/freds-crib
 startup: application
