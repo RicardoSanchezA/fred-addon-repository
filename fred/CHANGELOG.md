@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.19.0
+
+- LPS Next dogfooding is now a switch in the Home Console. Once you turn
+  it on, the engine records production and LPS Next side by side every 3
+  seconds in `/data/comparison-history/` (at most 48 hours and 128 MiB),
+  whether or not the panel is open. It also issues a check-in every six
+  hours, open for an hour. Check-ins appear in the panel only, with no
+  notifications; unanswered ones count as unanswered. It starts off: tap
+  **Start dogfooding** once after updating.
+- Reports can describe a moment up to 15 minutes back (When?: now, 1, 5 or
+  15 minutes ago). The engine looks up its own recorded pair nearest that
+  moment, within 15 seconds, and preserves it with the report. If nothing
+  was recorded then, the report still saves, without a snapshot.
+- The panel prompts open check-ins (Answer, Dismiss) and shows each saved
+  report's evidence status (collecting, archived, LPS Next pending or
+  missing, rejected).
+- HA backups also leave out `/data/comparison-history/`. Moments that
+  reports cite are kept with the reports in `/data/comparison/`, which is
+  still backed up.
+- The engine image is published for aarch64 only, the add-on's one listed
+  architecture.
+
+No protocol or configuration schema change: this release stays on protocol 5
+and schema 8, so the FrED integration does not need to be updated alongside
+it.
+
 ## 0.18.0
 
 - Every LPS Next feedback report now archives a triage bundle under
