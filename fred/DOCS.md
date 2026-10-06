@@ -10,10 +10,19 @@ configuration, and durable command state under `/data`, which Home Assistant
 includes in add-on backups. Since 0.17.0 it also keeps a rolling log in
 `/data/logs/` and a history of published states in `/data/state-history/`,
 each capped at 64 MiB. Backups leave out the contents of both directories,
-and of `/data/feedback-bundles/`, which is reserved for triage bundles. Copy
-these files off the box yourself if you need them. A restore brings these
-directories back empty, so the log and state history start again from the
-restore.
+and of `/data/feedback-bundles/`, where every LPS Next feedback report
+archives a triage bundle (up to 64 MiB each, 1 GiB in all; a full store
+rejects new bundles visibly and never evicts). Copy these files off the box
+yourself if you need them; bundles are exported over the engine's bearer API.
+A restore brings these directories back empty, so the log and state history
+start again from the restore.
+
+To fill a triage bundle, the engine reads its own Supervisor log and Home
+Assistant Core's log for the incident window, so the add-on has Supervisor API
+access (`hassio_api`) with the `homeassistant` role (`hassio_role`), which is
+what the Core log requires. Home Assistant history and logbook come from the
+Core API the add-on already uses (`homeassistant_api`), over a connection
+separate from the event stream.
 
 ## Home Console
 
