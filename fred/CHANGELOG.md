@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.20.0
+
+- The Home Console recovers by itself after the Home Assistant app returns
+  from the background, as on iOS, instead of showing stale state until a
+  refresh. A stream that misses two heartbeats (31 seconds of silence) is
+  dropped and reopened. On returning to the console, a stream that has been
+  silent for longer than a heartbeat reconnects at once, and a pending retry
+  runs immediately instead of waiting out its back-off. A healthy stream is
+  left alone.
+- The initial snapshot request times out after 10 seconds instead of
+  hanging on "Connecting", and a late, superseded load no longer replaces
+  newer state.
+- The comparison map and dogfooding status refresh as soon as the console
+  is shown again.
+
+No protocol or configuration schema change: this release stays on protocol 5
+and schema 8, so the FrED integration does not need to be updated alongside
+it.
+
 ## 0.19.0
 
 - LPS Next dogfooding is now a switch in the Home Console. Once you turn
