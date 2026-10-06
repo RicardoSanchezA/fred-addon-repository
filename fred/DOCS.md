@@ -18,10 +18,22 @@ A restore brings these directories back empty, so the log and state history
 start again from the restore.
 
 To fill a triage bundle, the engine reads its own Supervisor log and Home
-Assistant Core's log for the incident window, so the add-on has Supervisor API
-access (`hassio_api`) with the `homeassistant` role (`hassio_role`), which is
-what the Core log requires. Home Assistant history and logbook come from the
-Core API the add-on already uses (`homeassistant_api`), over a connection
+Assistant Core's log for the incident window. Reading the Core log needs
+Supervisor API access (`hassio_api`) with the `homeassistant` role
+(`hassio_role`), the least role that allows it.
+
+That role is not limited to logs. Supervisor allows it every request matching
+`/.+/info`, `/core/.+` and `/homeassistant/.+`, which includes controlling Home
+Assistant Core: restarting, stopping, updating and changing its options. The
+engine itself only registers discovery and reads `/addons/self/info`,
+`/addons/self/logs` and `/core/logs`, but code that ran inside the add-on could
+use its Supervisor token for anything the role allows. Weigh that before
+installing. Removing `hassio_api` and `hassio_role` from the add-on's
+`config.yaml` drops the Core log from triage bundles (recorded there as a named
+gap) and changes nothing else.
+
+Home Assistant history and logbook come from the separate Core API
+(`homeassistant_api`), which the add-on already uses, over a connection
 separate from the event stream.
 
 ## Home Console

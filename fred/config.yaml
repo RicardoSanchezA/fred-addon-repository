@@ -18,9 +18,13 @@ homeassistant_api: true
 # log (/addons/self/logs) and Home Assistant Core's (/core/logs), the latter
 # for Zigbee timeouts and unavailable devices around an incident.
 # `hassio_api` enables Supervisor API access; `hassio_role: homeassistant`
-# grants the Core log, which the default role does not. They are separate
-# settings. Nothing else in the engine calls Supervisor beyond what it
-# already did (discovery, /addons/self/info).
+# is the least role that reaches /core/logs. They are separate settings.
+# The role is wider than log reads: Supervisor allows it every path matching
+# /.+/info, /core/.+ and /homeassistant/.+, which includes Core control
+# (POST /core/restart, /core/stop, /core/update, /core/options). Code running
+# in this add-on could use its token for those. The engine itself calls only
+# discovery, /addons/self/info, /addons/self/logs and /core/logs. DOCS.md
+# states the same for users.
 hassio_api: true
 hassio_role: homeassistant
 ingress: true
