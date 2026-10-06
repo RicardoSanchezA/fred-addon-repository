@@ -10,10 +10,31 @@ configuration, and durable command state under `/data`, which Home Assistant
 includes in add-on backups. Since 0.17.0 it also keeps a rolling log in
 `/data/logs/` and a history of published states in `/data/state-history/`,
 each capped at 64 MiB. Backups leave out the contents of both directories,
-and of `/data/feedback-bundles/`, which is reserved for triage bundles. Copy
-these files off the box yourself if you need them. A restore brings these
-directories back empty, so the log and state history start again from the
-restore.
+and of `/data/feedback-bundles/`, where every LPS Next feedback report
+archives a triage bundle (up to 64 MiB each, 1 GiB in all; a full store
+rejects new bundles visibly and never evicts). Copy these files off the box
+yourself if you need them; bundles are exported over the engine's bearer API.
+A restore brings these directories back empty, so the log and state history
+start again from the restore.
+
+To fill a triage bundle, the engine reads its own Supervisor log and Home
+Assistant Core's log for the incident window. Reading the Core log needs
+Supervisor API access (`hassio_api`) with the `homeassistant` role
+(`hassio_role`), the least role that allows it.
+
+That role is not limited to logs. Supervisor allows it every request matching
+`/.+/info`, `/core/.+` and `/homeassistant/.+`, which includes controlling Home
+Assistant Core: restarting, stopping, updating and changing its options. The
+engine itself only registers discovery and reads `/addons/self/info`,
+`/addons/self/logs` and `/core/logs`, but code that ran inside the add-on could
+use its Supervisor token for anything the role allows. Weigh that before
+installing. Removing `hassio_api` and `hassio_role` from the add-on's
+`config.yaml` drops the Core log from triage bundles (recorded there as a named
+gap) and changes nothing else.
+
+Home Assistant history and logbook come from the separate Core API
+(`homeassistant_api`), which the add-on already uses, over a connection
+separate from the event stream.
 
 ## Home Console
 
