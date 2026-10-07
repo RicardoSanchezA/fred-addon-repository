@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.22.0
+
+- Triage over SSH: two new bearer-only routes let `run.py feedback pull`
+  copy reports, check-ins and bundles off the box and prove the copy is
+  complete. `GET /api/v1/comparison/check-ins/export` returns every check-in,
+  dismissal and slot that was due but never recorded, in pages fixed at one
+  moment (`as_of`). `GET /api/v1/comparison/results?as_of=` returns the
+  results for that same moment.
+- A report that covers an interval (start before end) is still stored and
+  exported, but no longer counts as a match or a miss against a single
+  snapshot. A supported point-in-time contradiction in the same check-in
+  still counts.
+- An occupancy sensor that goes stale with only the clock moving, or a lux
+  reading that ages out, is now published and persisted. Before, the
+  console and Home Assistant did not see the change.
+- The daylight-only state change is published after the engine runs, even
+  when a console command saved it first.
+
+No protocol or configuration schema change: this release stays on protocol 5
+and schema 8, so the FrED integration does not need to be updated alongside
+it.
+
 ## 0.21.0
 
 - The Home Console accepts Supervisor's ingress header only from
