@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.23.0
+
+- Every saved state now reaches Home Assistant and the console, whichever
+  part of FrED saved it: an engine event, a timer, a console or integration
+  command, a configuration change, or the disconnected clock. Before, a
+  command could save a state that Home Assistant only saw at the next engine
+  event. If Home Assistant can't be reached, FrED keeps retrying with the
+  newest state, from 1 s up to 30 s apart. Intermediate states may be
+  combined into one update.
+- Comparison feedback and snapshots no longer stop at 256 records. The
+  128 MiB comparison quota is the only limit, and FrED still refuses
+  visibly when it is reached.
+- Recovering triage bundles at startup now runs in the background, so FrED
+  serves the console and connects to Home Assistant without waiting for it.
+
+**Update the FrED integration to 0.16.2 first, or together with this
+release.** Combined updates skip sequence numbers, and older integrations
+resynchronize on every skip, which blanks FrED's entities each time.
+Protocol 5 and configuration schema 8 are unchanged.
+
 ## 0.22.0
 
 - Triage over SSH: two new bearer-only routes let `run.py feedback pull`
