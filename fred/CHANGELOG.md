@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.25.0
+
+- FrED no longer asks a check-in every six hours while LPS Next dogfooding
+  is on, and the panel no longer shows the check-in prompt. Record a wrong
+  map with **Correct dots** or **Report a room**; **Looks right**, **Someone
+  home, location unknown** and **Bookmark moment** are unchanged. Dogfooding
+  still captures both engines every 3 s. Check-ins already saved stay in the
+  summary and the results, and one still open when you update expires
+  unanswered.
+- The dashboard **Reset** button now reaches LPS Next. FrED counts each
+  reset, with the number of people you typed, and the LPS Next sidecar
+  reseeds its own picture when the count changes. A dot correction's path no
+  longer reaches back across a reset. The sidecar half needs the updated LPS
+  Next sidecar.
+
+No integration update is needed. Protocol 5 and configuration schema 8 are
+unchanged.
+
 ## 0.24.0
 
 - The floor plan is now the feedback report. Moving, removing or adding a
