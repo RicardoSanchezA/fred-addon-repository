@@ -23,7 +23,8 @@ A restore brings these directories back empty, so the log, state history and
 comparison history start again from the restore.
 
 To fill a triage bundle, the engine reads its own Supervisor log and Home
-Assistant Core's log for the incident window. Reading the Core log needs
+Assistant Core's log for the report's window: the incident, or for a dot
+correction, the path and stay of every corrected dot. Reading the Core log needs
 Supervisor API access (`hassio_api`) with the `homeassistant` role
 (`hassio_role`), the least role that allows it.
 

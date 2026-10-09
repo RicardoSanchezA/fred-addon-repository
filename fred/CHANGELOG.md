@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.24.0
+
+- The floor plan is now the feedback report. Moving, removing or adding a
+  dot only stages the change, and **Done** saves them all as one report.
+  Hold an empty part of a room to add a dot that one engine missed. Each
+  corrected dot can be withdrawn on its own later.
+- Every dot you move or remove now records when that placement began: the
+  walk into the room (the path) and how long the dot stayed there (the
+  dwell). It is read from the comparison history, and if that history cannot
+  be read the report is still saved, with the reason.
+- While LPS Next dogfooding is on, the comparison history also keeps the LPS
+  Next placement shown on the floor plan every 3 s, for the same 48 hours, so
+  a correction can trace where a dot came from.
+- A dot correction's triage bundle now covers that path and stay, padded
+  15 minutes before and 5 after, instead of only the minutes around the tap.
+  Other reports keep the incident window, and the 64 MiB bundle cap is
+  unchanged.
+
+No integration update is needed. Protocol 5 and configuration schema 8 are
+unchanged.
+
 ## 0.23.0
 
 - Every saved state now reaches Home Assistant and the console, whichever
