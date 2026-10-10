@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.26.0
+
+- **Correct dots** now moves the house as well as saving the report. After
+  **Done** saves your corrections, FrED follows the blue dots left on the
+  map: a person you moved is in the new room, and one you removed is gone.
+  The LPS Next sidecar follows the yellow dots in the same way. A sensor
+  that is still on in a room you cleared does not put the person back; the
+  next real motion can. People you did not edit keep their history, and
+  the room you emptied can turn its lights off, subject to holds and
+  daylight.
+- If someone walked while the map was frozen, FrED restarted, or LPS Next
+  had already moved or was not live, that part is skipped and the save line
+  says why. A correction can move the house only within 15 minutes of
+  saving, and only once. **Withdraw** saves the retraction only: it does
+  not move anyone back.
+- The LPS Next half needs the updated LPS Next sidecar *and* its capture.
+  With an older pair, a correction reaches LPS Next as a plain **Reset**.
+
+No integration update is needed. Protocol 5 and configuration schema 8 are
+unchanged.
+
 ## 0.25.0
 
 - FrED no longer asks a check-in every six hours while LPS Next dogfooding
