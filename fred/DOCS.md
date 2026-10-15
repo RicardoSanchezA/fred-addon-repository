@@ -14,13 +14,17 @@ and of `/data/feedback-bundles/`, where every LPS Next feedback report
 archives a triage bundle (up to 64 MiB each, 1 GiB in all; a full store
 rejects new bundles visibly and never evicts). Copy these files off the box
 yourself if you need them; bundles are exported over the engine's bearer API.
+Since 0.27.0 the engine also keeps a production replay recording in
+`/data/production-replay/` (64 MiB in all): checkpoints of its presence state
+and every input it consumes, which a triage bundle carries so a report can be
+replayed offline. Backups leave out its contents too.
 Backups also leave out `/data/comparison-history/`, the rolling record of
 production and LPS Next side by side that the engine keeps while LPS Next
 dogfooding is switched on in the Home Console (at most 48 hours and 128 MiB).
 A report that cites a moment from it copies that moment into
 `/data/comparison/`, which backups keep with the reports themselves.
-A restore brings these directories back empty, so the log, state history and
-comparison history start again from the restore.
+A restore brings these directories back empty, so the log, state history,
+replay recording and comparison history start again from the restore.
 
 To fill a triage bundle, the engine reads its own Supervisor log and Home
 Assistant Core's log for the report's window: the incident, or for a dot

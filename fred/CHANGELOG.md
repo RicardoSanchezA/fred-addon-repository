@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.27.0
+
+- FrED now keeps a **production replay recording** in
+  `/data/production-replay/` (at most 64 MiB, oldest first out): checkpoints
+  of its full presence state and every input it consumes, in order. Each LPS
+  Next feedback report's triage bundle carries the stretch around the
+  incident and says whether it can be replayed, so a report about production
+  FrED can be re-run offline exactly as it happened. Recording starts at the
+  first Home Assistant synchronization after the update.
+- Backups leave the recording out, like the rolling log and state history.
+- Recording never holds up lights or presence: if the disk is slow or full it
+  drops records, says so in the log, and picks up again.
+
+No integration update is needed. Protocol 5 and configuration schema 8 are
+unchanged.
+
 ## 0.26.0
 
 - **Correct dots** now moves the house as well as saving the report. After
