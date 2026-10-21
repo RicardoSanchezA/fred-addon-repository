@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.28.0
+
+- **Extra bodies nobody accounts for now go away.** If the people trackers
+  have counted fewer people at home than FrED models for 30 minutes, FrED
+  merges the extra body into the one with the newest motion. It never goes
+  below the tracker count, and a People-home claim pauses it, so an
+  untracked guest is safe while the claim stands.
+- **Fewer phantom bodies to begin with.** Two neighbouring rooms reporting
+  within 0.3 s of each other are one doorway, not a walk, so both stay lit
+  until the next motion settles which. A hall sensor that reports a moment
+  late no longer makes FrED invent a second person in the room beyond it.
+- **Two people, one ambiguous motion.** When motion in a room could have
+  come from either of two people sitting still, FrED now remembers that.
+  As soon as one of them is seen in their own room, it places the other in
+  the room that moved, instead of inventing a third person there a minute
+  later. Correcting the dots clears what it remembers.
+
+No integration update is needed. Protocol 5 and configuration schema 8 are
+unchanged.
+
 ## 0.27.0
 
 - FrED now keeps a **production replay recording** in
